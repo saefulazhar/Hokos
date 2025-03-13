@@ -16,18 +16,18 @@ class User_model extends CI_Model {
     }
 
     public function save_refresh_token($user_id, $token, $expires_at, $device_info) {
-        $existing = $this->db->get_where('users_token', [
+        $existing = $this->db->get_where('user_tokens', [
             'user_id' => $user_id,
             'device_info' => $device_info
         ])->row();
 
         if ($existing) {
-            $this->db->where('id', $existing->id)->update('users_token', [
+            $this->db->where('id', $existing->id)->update('user_tokens', [
                 'token' => $token,
                 'expires_at' => $expires_at
             ]);
         } else {
-            $this->db->insert('users_token', [
+            $this->db->insert('user_tokens', [
                 'user_id' => $user_id,
                 'token' => $token,
                 'expires_at' => $expires_at,
