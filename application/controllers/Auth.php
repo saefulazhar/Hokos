@@ -140,6 +140,9 @@ class Auth extends CI_Controller {
     public function register_page(){
         $this->load->view('register_view');
     }
+    public function login_page(){
+        $this->load->view('login_view');
+    }
     
     
 }
