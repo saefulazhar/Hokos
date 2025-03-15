@@ -136,6 +136,10 @@ class Auth extends CI_Controller {
             'refresh_token' => $new_refresh_token
         ], 200);
     }
+
+    public function register_page(){
+        $this->load->view('register_view');
+    }
     
     
 }
