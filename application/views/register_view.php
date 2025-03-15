@@ -36,46 +36,31 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
-                            <form class="user">
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="First Name">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Last Name">
-                                    </div>
+                            <form class="user" id="registerForm">
+                                
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="name"
+                                        placeholder="name">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                                    <input type="email" class="form-control form-control-user" id="email"
                                         placeholder="Email Address">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Password">
+                                            id="password1" placeholder="Password">
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password">
+                                            id="password2" placeholder="Repeat Password">
                                     </div>
                                 </div>
-                                <a href="login.html" class="btn btn-primary btn-user btn-block">
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
                                     Register Account
-                                </a>
-                                <hr>
-                                <a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Register with Google
-                                </a>
-                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                                </a>
+                                </button>
                             </form>
                             <hr>
-                            <div class="text-center">
-                                <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div>
                             <div class="text-center">
                                 <a class="small" href="<?= base_url("login_view")?>">Already have an account? Login!</a>
                             </div>
@@ -98,5 +83,36 @@
     <script src="<?= base_url("assets/")?>js/sb-admin-2.min.js"></script>
 
 </body>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Mencegah reload halaman
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password1').value;
+    const confirm_password = document.getElementById('password2').value;
+
+    if (password !== confirm_password) {
+        alert("Password tidak sama!");
+        return;
+    }
+
+    const response = await fetch("<?= base_url('auth/register') ?>", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password })
+    });
+
+    const data = await response.json();
+    
+    if (response.ok) {
+        alert("Registrasi berhasil! Silakan login.");
+        window.location.href = "<?= base_url('login_view') ?>";
+    } else {
+        alert(data.message);
+    }
+});
+</script>
 
 </html>
