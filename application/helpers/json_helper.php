@@ -7,8 +7,8 @@ if (!function_exists('show_json')) {
         $CI->output
             ->set_content_type('application/json')
             ->set_status_header($status_code)
-            ->set_output(json_encode($data, JSON_PRETTY_PRINT))
+            ->set_output(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES))
             ->_display();
-        exit;
+        exit(); // Pastikan eksekusi berhenti setelah mengirim response
     }
 }

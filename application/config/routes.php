@@ -55,6 +55,7 @@ $route['translate_uri_dashes'] = FALSE;
 //routes fe
 $route['register_view'] = 'auth/register_page';
 $route['login_view'] = 'auth/login_page';
+$route['home_view'] = 'home/home_page';
 
 
 //routes api
@@ -62,3 +63,5 @@ $route['api/auth/login'] = 'auth/login';
 $route['api/auth/register'] = 'auth/register';
 $route['api/auth/get_profile'] = 'auth/get_profile';
 $route['api/auth/refresh_token'] = 'auth/refresh_token';
+$route['api/auth/logout'] = 'auth/logout';
+$route['api/home'] = 'home/index';
