@@ -182,9 +182,11 @@ class Auth extends CI_Controller {
         show_json(['user' => $user], 200);
     }
 
-    public function register_page(){
-        $this->load->view('register_view');
+    public function register_page() {
+        $role = $this->input->get('role'); // Ambil role dari URL
+        $this->load->view('register_view', ['role' => $role]);
     }
+    
 
     public function login_page(){
         $this->load->view('login_view');
