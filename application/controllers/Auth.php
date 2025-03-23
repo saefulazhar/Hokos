@@ -97,6 +97,15 @@ class Auth extends CI_Controller {
             $device_info
         );
 
+        set_cookie([
+            'name'   => 'access_token',
+            'value'  => $access_token,
+            'expire' => 3600, // 1 jam
+            'secure' => false, // Ubah ke true jika pakai HTTPS
+            'httponly' => true,
+            'samesite' => 'Lax'
+        ]);
+
         unset($user->password); // Hapus password dari respons
 
         show_json([

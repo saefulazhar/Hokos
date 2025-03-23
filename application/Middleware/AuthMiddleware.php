@@ -17,13 +17,17 @@ class AuthMiddleware {
 
     public function check_auth() {
         $headers = $this->CI->input->get_request_header('Authorization');
+$cookie_token = $this->CI->input->cookie('access_token');
 
-        if (!$headers) {
-            log_message('error', 'JWT Error: Token tidak ditemukan');
-            show_json(['status' => false, 'message' => 'Unauthorized: Token tidak ditemukan'], 401);
-        }
+if ($headers) {
+    $token = str_replace('Bearer ', '', $headers);
+} elseif ($cookie_token) {
+    $token = $cookie_token;
+} else {
+    log_message('error', 'JWT Error: Token tidak ditemukan di header atau cookie');
+    show_json(['status' => false, 'message' => 'Unauthorized: Token tidak ditemukan'], 401);
+}
 
-        $token = str_replace('Bearer ', '', $headers);
 
         try {
             $decoded = decode_jwt($token);

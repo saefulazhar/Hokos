@@ -26,7 +26,7 @@
             <h1>Selamat Datang di HoKos</h1>
             <p class="lead">Cari, temukan, dan sewa kos dengan mudah!</p>
             <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#roleModal">Register</button>
-            <a href="login" class="btn btn-outline-light btn-lg">Login</a>
+            <a href="<?= base_url('login_view')?>" class="btn btn-outline-light btn-lg">Login</a>
         </div>
     </div>
 
@@ -41,7 +41,7 @@
                 <div class="modal-body text-center">
                     <p>Silakan pilih jenis akun Anda:</p>
                     <a href="<?= base_url('register_view') ?>?role=pencari" class="btn btn-outline-primary btn-lg me-2">Pencari Kos</a>
-                    <a href="<?= base_url('register_view') ?>" class="btn btn-outline-success btn-lg">Pemilik Kos</a>
+                    <a href="<?= base_url('register_view') ?>?role=pemilik" class="btn btn-outline-success btn-lg">Pemilik Kos</a>
                 </div>
             </div>
         </div>
