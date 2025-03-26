@@ -38,7 +38,16 @@ class Pemilik extends CI_Controller {
         $this->load->view('pemilik/edit_kos', $data);
     }
 
-    public function update_kos($id) {
+    public function update_kos($id = null) {
+        // Ambil ID dari POST jika tidak ada di parameter URL
+        if ($id === null) {
+            $id = $this->input->post('id');
+        }
+    
+        if (!$id) {
+            show_error("ID Kos tidak ditemukan", 400);
+        }
+    
         $data = [
             'name'        => $this->input->post('name'),
             'address'     => $this->input->post('address'),
@@ -48,10 +57,11 @@ class Pemilik extends CI_Controller {
             'description' => $this->input->post('description'),
             'status'      => $this->input->post('status')
         ];
-
+    
         $this->Kos_model->update_kos($id, $this->authMiddleware->user->id, $data);
         redirect('pemilik/home');
     }
+    
 
     public function hapus_kos($id) {
         $this->Kos_model->delete_kos($id, $this->authMiddleware->user->id);
