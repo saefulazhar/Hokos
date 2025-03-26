@@ -76,22 +76,33 @@
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    const response = await fetch("<?= base_url('auth/login') ?>", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-    });
+    try {
+        const response = await fetch("<?= base_url('auth/login') ?>", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
 
-    const data = await response.json();
+        const data = await response.json();
 
-    if (response.ok) {
-        alert("Login berhasil!");
-        localStorage.setItem("token", data.token); // Simpan token JWT
-        window.location.href = "<?= base_url('home_view') ?>";
-    } else {
-        alert(data.message);
+        if (response.ok) {
+            alert("Login berhasil!");
+
+            // Redirect ke halaman sesuai role yang dikembalikan dari backend
+            if (data.redirect_url) {
+                window.location.href = data.redirect_url;
+            } else {
+                alert("Login berhasil, tetapi tidak ada redirect URL!");
+            }
+        } else {
+            alert(data.message); // Tampilkan pesan error dari backend
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Terjadi kesalahan saat login. Silakan coba lagi.");
     }
 });
+
     function redirectToRegister(role) {
         window.location.href = "<?= base_url('register_view?role=') ?>" + role;
     }

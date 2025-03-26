@@ -108,9 +108,21 @@ class Auth extends CI_Controller {
 
         unset($user->password); // Hapus password dari respons
 
+        if ($user->role == 'pencari') {
+            $redirect_url = base_url('pencari/home');
+        } elseif ($user->role == 'pemilik') {
+            $redirect_url = base_url('pemilik/home');
+        } elseif ($user->role == 'admin') {
+            $redirect_url = base_url('admin/dashboard');
+        } else {
+            show_json(['status' => false, 'message' => 'Role tidak dikenali'], 403);
+            exit;
+        }
+        
         show_json([
             'access_token' => $access_token,
             'refresh_token' => $refresh_token,
+            'redirect_url' => $redirect_url,
             'user' => $user
         ], 200);
     }
